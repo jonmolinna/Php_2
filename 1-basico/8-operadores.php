@@ -68,7 +68,46 @@ var_dump(5 <=> 5); // 0; Ambos sin iguales
 var_dump(5 <=> 4); // 1; izquierda es mayor a derecha
 var_dump(4 <=> 5); // -1; izquierda es menor a derecha
 
+echo "<hr />";
+
+// 5. Operadores de Incremento y decremento
+$incremento = 5;
+
+++$incremento;
+echo $incremento, "<br />"; // 6
+
+$incremento++;
+echo $incremento, "<br />"; // 7
+
+$decremento = 10;
+
+--$decremento;
+echo $decremento, "<br />"; // 9
+
+$decremento--;
+echo $decremento, "<br />"; // 8
 
 
+echo "<hr />";
+
+// 6. Operadores Logicos
+var_dump(4 < 5 && 5 < 6); // Verdadero => v and v
+var_dump(14 < 5 || 5 < 6); // Verdader => f or v
+var_dump(!true); // Falso;
+var_dump(!false); // True;
+
+echo "<hr />";
+
+// 7. Operadores Ternarios ? y de Fusion Nulo ??
+$age = 18;
+
+$type_person = $age >= 18 ? "Mayor" : "Menor";
+
+$name = "Jon";
+$user = $name ?? "Invitado"; // si $name es numero pon lo Invitado
+
+
+// 8. Operador de control de Errores @ es mejor trabajar con try catch
+$archivo = @file("hola.txt");
 
 ?>
