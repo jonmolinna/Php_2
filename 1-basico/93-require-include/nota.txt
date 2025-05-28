@@ -1,0 +1,8 @@
+1- Include
+    -> Si no encuentra el archivo solo te generar Warning, y te permite seguir con la ejecucion.
+    -> 
+
+2. Require
+    -> Sale un fatal error y no te permite seguir con la ejecucion.
+    -> conexion a la base de datos, conexion a la Api
+
