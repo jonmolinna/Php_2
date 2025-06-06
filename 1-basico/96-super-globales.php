@@ -79,20 +79,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <?php
 // 4. VARIABLES DE TIPO FILE
-    var_dump($_FILES);
+var_dump($_FILES);
 
-    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["file"])) {
-        $archivo = $_FILES["file"];
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["file"])) {
+    $archivo = $_FILES["file"];
 
-        echo "<h3>Informacion del archivo subido:</h3>";
+    echo "<h3>Informacion del archivo subido:</h3>";
 
-        if ($archivo["error"] === UPLOAD_ERR_OK) {
-            $name_temporal = $archivo["tmp_name"];
-            $name_original = $archivo["name"];
-            $tamano = $archivo["size"];
-            $tipo = $archivo["type"];
+    if ($archivo["error"] === UPLOAD_ERR_OK) {
+        $name_temporal = $archivo["tmp_name"];
+        $name_original = $archivo["name"];
+        $tamano = $archivo["size"];
+        $tipo = $archivo["type"];
 
-            echo "
+        echo "
                 <ul>
                     <li>{$name_temporal}</li>
                     <li>{$name_original}</li>
@@ -102,32 +102,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             
             ";
 
-            $directorio_subidos = "uploads/";
+        $directorio_subidos = "uploads/";
 
-            // Verificando si existe el directorio
-            if (!is_dir($directorio_subidos)) {
-                // Crea una carpeta llamado upload y dale permiso de escritura y lectura
-                mkdir($directorio_subidos, 0777, true);
-            }
-
-            $ruta_destino = $directorio_subidos . $name_original;
-
-            // Si subio el Archivo
-            if (move_uploaded_file($name_temporal, $ruta_destino)) {
-                echo "<p style='color:green;'>El archivo: {$name_original} se ha subido con exito al servidor</p>";
-            }
-            else {
-                echo "<p style='color:red;'>Error al subir el archivo: Codigo de error 1: {$archivo['error']}</p>";
-            }
-
-
+        // Verificando si existe el directorio
+        if (!is_dir($directorio_subidos)) {
+            // Crea una carpeta llamado upload y dale permiso de escritura y lectura
+            mkdir($directorio_subidos, 0777, true);
         }
-        else {
-            echo "<p style='color:red;'>Error al subir el archivo: Codigo de error 2: {$archivo['error']}</p>";
-        }
-    } 
 
-    
+        $ruta_destino = $directorio_subidos . $name_original;
+
+        // Si subio el Archivo
+        if (move_uploaded_file($name_temporal, $ruta_destino)) {
+            echo "<p style='color:green;'>El archivo: {$name_original} se ha subido con exito al servidor</p>";
+        } else {
+            echo "<p style='color:red;'>Error al subir el archivo: Codigo de error 1: {$archivo['error']}</p>";
+        }
+    } else {
+        echo "<p style='color:red;'>Error al subir el archivo: Codigo de error 2: {$archivo['error']}</p>";
+    }
+}
+
+
 
 ?>
 
@@ -139,3 +135,56 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
     <button type="submit">Subir Archivo</button>
 </form>
+
+<?php
+
+// COOKIES
+echo "<h2>COOKIE</h2>";
+
+$idioma_preferido = "";
+
+if (isset($_POST["idioma"])) {
+    $nuevo_idioma = $_POST["idioma"];
+
+    if (in_array($nuevo_idioma, ["es", "en"])) {
+        setcookie("idioma_usuario", $nuevo_idioma, time() +  (86400 * 30), "/");
+        $idioma_preferido = $nuevo_idioma;
+
+        echo "<p>Preferencia del idioma guardado como: {$nuevo_idioma}</p>";
+    }
+} else if (isset($_COOKIE["idioma_usuario"])) {
+    $idioma_guardado = $_COOKIE["idioma_usuario"];
+
+    if (in_array($idioma_guardado, ["es", "en"])) {
+        $idioma_preferido = $idioma_guardado;
+    }
+}
+
+
+?>
+
+<form action="96-super-globales.php" method="POST">
+    <label for="idioma">Selecciona idioma</label>
+    <select name="idioma" id="idioma">
+        <option value="" <?php echo ($idioma_preferido === "") ? "selected" : ""; ?>>---</option>
+        <option value="es" <?php echo ($idioma_preferido === "es") ? "selected" : ""; ?>>Español</option>
+        <option value="en" <?php echo ($idioma_preferido === "en") ? "selected" : ""; ?>>Español</option>
+    </select>
+    <button type="submit">Guardar Idioma</button>
+</form>
+
+<?php
+
+if ($idioma_preferido === "es") {
+    echo "<p>El idioma seleccionado es español</p>";
+}
+if ($idioma_preferido === "en") {
+    echo "<p>The selected language es English</p>";
+} else {
+    echo "<p>Sin Seleccion de idioma / Without language selection</p>";
+}
+
+?>
+
+
+<!-- SESSION -->
