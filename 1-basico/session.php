@@ -13,6 +13,8 @@ if (isset($_SESSION["visitas"])) {
 }
 
 echo "<p>Has visitado esta pagina " . $_SESSION['visitas'] . " veces en esta session.</p>";
+echo "<p><a href='session.php'>Recargar la pagina</a></p>";
+echo "<p><a href='destruir_session.php'>Cerrar session (Reiniciar el contador)</a></p>";
 
 
-// 8-50
+?>
